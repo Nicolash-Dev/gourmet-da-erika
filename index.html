@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#4b2115">
-<title>Gourmet da Érica</title>
+<title>Gourmet da Érika | Geladinhos & Picolés Gourmet</title>
 <style>
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fffaf6;color:#2d1710}
 button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -38,7 +38,7 @@ footer{text-align:center;color:#765f56;padding:46px 18px 100px}
 </head>
 <body>
 <div class="top">🍦 2 unidades ou mais = ENTREGA GRÁTIS em Santa Terezinha</div>
-<header><div class="nav"><div class="logo">Gourmet da <span>Érica</span></div><div><button class="btn brown" onclick="goMenu()">Cardápio</button> <button class="btn pink" onclick="openCart()">🛒 <span id="countTop">0</span></button></div></div></header>
+<header><div class="nav"><div class="logo">Gourmet da <span>Érika</span></div><div><button class="btn brown" onclick="goMenu()">Cardápio</button> <button class="btn pink" onclick="openCart()">🛒 <span id="countTop">0</span></button></div></div></header>
 <section class="hero">
 <div><span class="pill">Geladinhos & Picolés Gourmet</span><h1>Um sabor que deixa o dia <span>mais gostoso.</span></h1><p>Escolha seus sabores, monte o carrinho e finalize o pedido direto no WhatsApp.</p><button class="btn pink" onclick="goMenu()">Escolher sabores</button></div>
 <div class="delivery"><small>ENTREGA EM SANTA TEREZINHA</small><br><br><b>1 unidade: R$ 2,00</b><p class="free"><b>2 unidades ou mais: GRÁTIS 🎉</b></p><p>Retirada também é grátis.</p></div>
@@ -48,7 +48,7 @@ footer{text-align:center;color:#765f56;padding:46px 18px 100px}
 <div class="grid" id="grid"></div>
 </section>
 <section class="wrap info"><div class="inf"><b>🛵 Entrega</b><span>R$2 para 1 unidade; grátis com 2 ou mais.</span></div><div class="inf"><b>💵 Pagamento</b><span>Pix ou dinheiro.</span></div><div class="inf"><b>📲 Pedido</b><span>Finalização pelo WhatsApp.</span></div></section>
-<section class="wrap admin"><details><summary><b>⚙️ Painel da Érica — disponibilidade</b></summary><p style="color:#765f56;font-size:14px">Nesta V1, a alteração fica salva somente neste navegador. Depois conectaremos um banco de dados para sincronizar com todos os clientes.</p><div id="admin"></div></details></section>
+<section class="wrap admin"><details><summary><b>⚙️ Painel da Érika — disponibilidade</b></summary><p style="color:#765f56;font-size:14px">Nesta V1, a alteração fica salva somente neste navegador. Depois conectaremos um banco de dados para sincronizar com todos os clientes.</p><div id="admin"></div></details></section>
 <button id="cartbar" class="cartbar" onclick="openCart()"><span><b id="barCount">0 itens</b><br><small id="barMsg">Ver carrinho</small></span><b id="barTotal">R$ 0,00 →</b></button>
 <div id="overlay" class="overlay"><div class="drawer"><div class="dhead"><div><small>SEU PEDIDO</small><h2 style="margin:3px 0">Carrinho</h2></div><button class="x" onclick="closeCart()">×</button></div><div id="items"></div><div class="summary"><div class="sum"><span>Subtotal</span><b id="sub">R$ 0,00</b></div><div class="sum"><span>Entrega</span><b id="fee">—</b></div><div id="notice" class="notice hidden"></div><div class="sum total"><span>Total</span><span id="total">R$ 0,00</span></div></div>
 <div class="form"><select id="receive" onchange="renderCart()"><option value="delivery">Entrega</option><option value="pickup">Retirada</option></select><div id="addrbox">
@@ -57,7 +57,7 @@ footer{text-align:center;color:#765f56;padding:46px 18px 100px}
 <button type="button" class="location-btn" id="locBtn" onclick="getLocation()">📍 Usar minha localização atual</button>
 <div id="locStatus" class="location-status hidden"></div>
 </div><input id="name" placeholder="Seu nome"><input id="phone" placeholder="Seu telefone (opcional)"><select id="pay" onchange="payChange()"><option>Pix</option><option>Dinheiro</option></select><div id="changebox" class="hidden"><input id="change" placeholder="Troco para quanto? Ex.: R$ 50"></div><textarea id="obs" rows="2" placeholder="Observação (opcional)"></textarea><button class="btn pink" style="padding:15px" onclick="finish()">Finalizar no WhatsApp</button></div></div></div>
-<footer><b>Gourmet da Érica</b><br>Santa Terezinha de Goiás<br><small>(62) 98122-8292 • Atendimento todos os dias</small></footer>
+<footer><b>Gourmet da Érika</b><br>Santa Terezinha de Goiás<br><small>(62) 98122-8292 • Atendimento todos os dias</small></footer>
 <script>
 var PRODUCTS = [{"id": 1, "name": "Açaí Trufado", "cat": "Picolé", "price": 10, "img": "assets/acai-trufado.jpg"}, {"id": 2, "name": "Mousse de Maracujá", "cat": "Geladinho", "price": 7, "img": "assets/mousse-maracuja.jpg"}, {"id": 3, "name": "Trufado de Maracujá", "cat": "Geladinho", "price": 7, "img": "assets/trufado-maracuja.jpg"}, {"id": 4, "name": "Ninho com Nutella", "cat": "Geladinho", "price": 7, "img": "assets/ninho-nutella.jpg"}, {"id": 5, "name": "Prestígio", "cat": "Geladinho", "price": 7, "img": "assets/prestigio-geladinho.jpg"}, {"id": 6, "name": "Ferrero Rocher", "cat": "Geladinho", "price": 7, "img": "assets/ferrero-rocher.jpg"}, {"id": 7, "name": "Oreo • Ninho & Nutella", "cat": "Picolé", "price": 10, "img": "assets/oreo-ninho-nutella.jpg"}, {"id": 8, "name": "Pudim", "cat": "Geladinho", "price": 7, "img": "assets/pudim.jpg"}, {"id": 9, "name": "Nutilinho", "cat": "Picolé", "price": 10, "img": "assets/nutilinho.jpg"}, {"id": 10, "name": "Prestígio Gourmet", "cat": "Picolé", "price": 10, "img": "assets/prestigio-picole.jpg"}, {"id": 11, "name": "Laka com Oreo", "cat": "Geladinho", "price": 7, "img": "assets/laka-oreo.jpg"}, {"id": 12, "name": "Ninho com Morango", "cat": "Geladinho", "price": 7, "img": "assets/ninho-morango.jpg"}, {"id": 13, "name": "Tablito", "cat": "Geladinho", "price": 7, "img": "assets/tablito.jpg"}, {"id": 14, "name": "Napolitano", "cat": "Picolé", "price": 10, "img": "assets/napolitano.jpg"}, {"id": 15, "name": "Sensação", "cat": "Picolé", "price": 10, "img": "assets/sensacao.jpg"}];
 var cart = {};
@@ -143,7 +143,7 @@ function finish(){
  var name=document.getElementById("name").value.trim(); if(!name){alert("Digite seu nome.");return;}
  var receive=document.getElementById("receive").value, addr=document.getElementById("addr").value.trim();
  if(receive==="delivery"&&!addr&&!customerLocation){alert("Digite o endereço ou use sua localização atual.");return;}
- var f=fee(), lines=["🍦 *NOVO PEDIDO — GOURMET DA ÉRICA*","","*Itens:*"];
+ var f=fee(), lines=["🍦 *NOVO PEDIDO — GOURMET DA ÉRIKA*","","*Itens:*"];
  PRODUCTS.forEach(function(p){ if(cart[p.id]) lines.push(cart[p.id]+"x "+p.name+" — "+money(cart[p.id]*p.price)); });
  lines.push("","Subtotal: "+money(sub()),"Entrega: "+(receive==="pickup"?"RETIRADA GRÁTIS":(f===0?"GRÁTIS":money(f))),"*TOTAL: "+money(sub()+f)+"*","", "Cliente: "+name);
  var phone=document.getElementById("phone").value.trim(); if(phone) lines.push("Telefone: "+phone);
