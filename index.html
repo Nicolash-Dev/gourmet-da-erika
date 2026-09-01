@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4b2115">
+<title>Gourmet da Érica</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fffaf6;color:#2d1710}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{background:#4b2115;color:#fff;text-align:center;padding:10px 12px;font-weight:700;font-size:14px}
+header{position:sticky;top:0;z-index:20;background:#fffaf6f2;border-bottom:1px solid #eadbd1}
+.nav{max-width:1120px;margin:auto;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:900}.logo span{color:#d83f72}
+.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800}.pink{background:#d83f72;color:white}.brown{background:#f3e5dc;color:#4b2115}
+.hero{max-width:1120px;margin:auto;padding:42px 18px 24px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+.hero h1{font-size:clamp(42px,7vw,76px);line-height:.95;margin:8px 0 18px;letter-spacing:-2px}.hero h1 span{color:#d83f72}
+.hero p{color:#765f56;font-size:18px;line-height:1.55}.pill{display:inline-block;background:#fbe6ee;color:#a5234e;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800}
+.delivery{background:linear-gradient(135deg,#572718,#241008);color:#fff;border-radius:25px;padding:28px}.delivery b{font-size:27px}.delivery .free{color:#ffd778;font-size:20px}
+.wrap{max-width:1120px;margin:auto;padding:26px 18px}.head{display:flex;justify-content:space-between;gap:15px;align-items:end;margin-bottom:18px}.head h2{font-size:34px;margin:0}.head p{margin:6px 0 0;color:#765f56}
+.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid #e5d5cb;background:#fff;padding:9px 14px;border-radius:999px;font-weight:800}.filter.active{background:#4b2115;color:white}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:#fff;border:1px solid #eadbd1;border-radius:19px;overflow:hidden;position:relative;box-shadow:0 7px 20px #3b1b100b}.card.off{opacity:.55}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#eee}.body{padding:13px}.cat{color:#b77d29;font-size:11px;font-weight:900;text-transform:uppercase}.body h3{font-size:16px;margin:5px 0 12px}.line{display:flex;justify-content:space-between;align-items:center}.price{font-size:20px;font-weight:900}.plus{width:42px;height:42px;border:0;border-radius:12px;background:#d83f72;color:#fff;font-size:24px;font-weight:900}.off .plus{background:#aaa}.sold{position:absolute;top:10px;left:10px;background:#222;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.inf{background:#fff;border:1px solid #eadbd1;border-radius:16px;padding:18px}.inf b{display:block;margin-bottom:6px}.inf span{color:#765f56;font-size:14px}
+.cartbar{display:none;position:fixed;z-index:40;bottom:16px;left:50%;transform:translateX(-50%);width:min(620px,92%);background:#4b2115;color:#fff;border:0;border-radius:17px;padding:14px 17px;box-shadow:0 15px 40px #0005;text-align:left}.cartbar.show{display:flex;justify-content:space-between;align-items:center}
+.overlay{display:none;position:fixed;inset:0;z-index:50;background:#0008}.overlay.show{display:block}.drawer{height:100%;width:min(520px,100%);background:#fffaf6;margin-left:auto;padding:20px;overflow-y:auto}
+.dhead{display:flex;justify-content:space-between;align-items:center}.x{border:0;background:#eee;border-radius:50%;width:40px;height:40px;font-size:20px}
+.item{display:grid;grid-template-columns:55px 1fr auto;gap:10px;align-items:center;background:#fff;border:1px solid #eadbd1;border-radius:14px;padding:9px;margin:9px 0}.item img{width:55px;height:63px;object-fit:cover;border-radius:9px}.qty{display:flex;align-items:center;gap:6px}.qty button{border:0;background:#f2e4dc;width:28px;height:28px;border-radius:8px;font-weight:900}
+.summary{background:#fff;border:1px solid #eadbd1;border-radius:15px;padding:14px;margin:14px 0}.sum{display:flex;justify-content:space-between;margin:7px 0}.total{font-size:20px;font-weight:900;border-top:1px solid #eadbd1;padding-top:10px}.notice{background:#e8f7ee;color:#155f3b;border-radius:10px;padding:10px;font-size:14px;font-weight:800}
+.form{display:grid;gap:9px}.form input,.form select,.form textarea{width:100%;padding:12px;border:1px solid #dccac0;border-radius:11px;background:#fff}.location-btn{width:100%;border:1px solid #d83f72;background:#fff;color:#a5234e;border-radius:11px;padding:12px;font-weight:800}
+.location-status{font-size:13px;color:#155f3b;font-weight:800;padding:0 2px}
+.hidden{display:none!important}
+.admin{margin-top:30px}.admin details{background:#fff;border:1px solid #eadbd1;border-radius:16px;padding:14px}.adminrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px;border-bottom:1px solid #f0e7e2}.toggle{border:0;border-radius:999px;padding:8px 11px;font-weight:800}.on{background:#e4f6eb;color:#145e3a}.offbtn{background:#f5e6e6;color:#8b2727}
+footer{text-align:center;color:#765f56;padding:46px 18px 100px}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.info{grid-template-columns:1fr}}
+@media(max-width:520px){.head{align-items:flex-start;flex-direction:column}.grid{gap:9px}.wrap{padding-left:12px;padding-right:12px}.card .body{padding:10px}.body h3{font-size:14px}.hero{padding-left:16px;padding-right:16px}.nav .brown{display:none}}
+</style>
+</head>
+<body>
+<div class="top">🍦 2 unidades ou mais = ENTREGA GRÁTIS em Santa Terezinha</div>
+<header><div class="nav"><div class="logo">Gourmet da <span>Érica</span></div><div><button class="btn brown" onclick="goMenu()">Cardápio</button> <button class="btn pink" onclick="openCart()">🛒 <span id="countTop">0</span></button></div></div></header>
+<section class="hero">
+<div><span class="pill">Geladinhos & Picolés Gourmet</span><h1>Um sabor que deixa o dia <span>mais gostoso.</span></h1><p>Escolha seus sabores, monte o carrinho e finalize o pedido direto no WhatsApp.</p><button class="btn pink" onclick="goMenu()">Escolher sabores</button></div>
+<div class="delivery"><small>ENTREGA EM SANTA TEREZINHA</small><br><br><b>1 unidade: R$ 2,00</b><p class="free"><b>2 unidades ou mais: GRÁTIS 🎉</b></p><p>Retirada também é grátis.</p></div>
+</section>
+<section class="wrap" id="menu">
+<div class="head"><div><h2>Nosso cardápio</h2><p>Escolha, adicione e pronto.</p></div><div class="filters"><button class="filter active" data-f="Todos">Todos</button><button class="filter" data-f="Geladinho">Geladinhos</button><button class="filter" data-f="Picolé">Picolés</button></div></div>
+<div class="grid" id="grid"></div>
+</section>
+<section class="wrap info"><div class="inf"><b>🛵 Entrega</b><span>R$2 para 1 unidade; grátis com 2 ou mais.</span></div><div class="inf"><b>💵 Pagamento</b><span>Pix ou dinheiro.</span></div><div class="inf"><b>📲 Pedido</b><span>Finalização pelo WhatsApp.</span></div></section>
+<section class="wrap admin"><details><summary><b>⚙️ Painel da Érica — disponibilidade</b></summary><p style="color:#765f56;font-size:14px">Nesta V1, a alteração fica salva somente neste navegador. Depois conectaremos um banco de dados para sincronizar com todos os clientes.</p><div id="admin"></div></details></section>
+<button id="cartbar" class="cartbar" onclick="openCart()"><span><b id="barCount">0 itens</b><br><small id="barMsg">Ver carrinho</small></span><b id="barTotal">R$ 0,00 →</b></button>
+<div id="overlay" class="overlay"><div class="drawer"><div class="dhead"><div><small>SEU PEDIDO</small><h2 style="margin:3px 0">Carrinho</h2></div><button class="x" onclick="closeCart()">×</button></div><div id="items"></div><div class="summary"><div class="sum"><span>Subtotal</span><b id="sub">R$ 0,00</b></div><div class="sum"><span>Entrega</span><b id="fee">—</b></div><div id="notice" class="notice hidden"></div><div class="sum total"><span>Total</span><span id="total">R$ 0,00</span></div></div>
+<div class="form"><select id="receive" onchange="renderCart()"><option value="delivery">Entrega</option><option value="pickup">Retirada</option></select><div id="addrbox">
+<input id="addr" placeholder="Rua, número e bairro">
+<input id="ref" placeholder="Ponto de referência (opcional)">
+<button type="button" class="location-btn" id="locBtn" onclick="getLocation()">📍 Usar minha localização atual</button>
+<div id="locStatus" class="location-status hidden"></div>
+</div><input id="name" placeholder="Seu nome"><input id="phone" placeholder="Seu telefone (opcional)"><select id="pay" onchange="payChange()"><option>Pix</option><option>Dinheiro</option></select><div id="changebox" class="hidden"><input id="change" placeholder="Troco para quanto? Ex.: R$ 50"></div><textarea id="obs" rows="2" placeholder="Observação (opcional)"></textarea><button class="btn pink" style="padding:15px" onclick="finish()">Finalizar no WhatsApp</button></div></div></div>
+<footer><b>Gourmet da Érica</b><br>Santa Terezinha de Goiás<br><small>(62) 98122-8292 • Atendimento todos os dias</small></footer>
+<script>
+var PRODUCTS = [{"id": 1, "name": "Açaí Trufado", "cat": "Picolé", "price": 10, "img": "assets/acai-trufado.jpg"}, {"id": 2, "name": "Mousse de Maracujá", "cat": "Geladinho", "price": 7, "img": "assets/mousse-maracuja.jpg"}, {"id": 3, "name": "Trufado de Maracujá", "cat": "Geladinho", "price": 7, "img": "assets/trufado-maracuja.jpg"}, {"id": 4, "name": "Ninho com Nutella", "cat": "Geladinho", "price": 7, "img": "assets/ninho-nutella.jpg"}, {"id": 5, "name": "Prestígio", "cat": "Geladinho", "price": 7, "img": "assets/prestigio-geladinho.jpg"}, {"id": 6, "name": "Ferrero Rocher", "cat": "Geladinho", "price": 7, "img": "assets/ferrero-rocher.jpg"}, {"id": 7, "name": "Oreo • Ninho & Nutella", "cat": "Picolé", "price": 10, "img": "assets/oreo-ninho-nutella.jpg"}, {"id": 8, "name": "Pudim", "cat": "Geladinho", "price": 7, "img": "assets/pudim.jpg"}, {"id": 9, "name": "Nutilinho", "cat": "Picolé", "price": 10, "img": "assets/nutilinho.jpg"}, {"id": 10, "name": "Prestígio Gourmet", "cat": "Picolé", "price": 10, "img": "assets/prestigio-picole.jpg"}, {"id": 11, "name": "Laka com Oreo", "cat": "Geladinho", "price": 7, "img": "assets/laka-oreo.jpg"}, {"id": 12, "name": "Ninho com Morango", "cat": "Geladinho", "price": 7, "img": "assets/ninho-morango.jpg"}, {"id": 13, "name": "Tablito", "cat": "Geladinho", "price": 7, "img": "assets/tablito.jpg"}, {"id": 14, "name": "Napolitano", "cat": "Picolé", "price": 10, "img": "assets/napolitano.jpg"}, {"id": 15, "name": "Sensação", "cat": "Picolé", "price": 10, "img": "assets/sensacao.jpg"}];
+var cart = {};
+var avail = {};
+var filter = "Todos";
+var customerLocation = null;
+
+try { cart = JSON.parse(localStorage.getItem("erica_cart") || "{}") || {}; } catch(e) { cart = {}; }
+try { avail = JSON.parse(localStorage.getItem("erica_avail") || "{}") || {}; } catch(e) { avail = {}; }
+
+function money(v){ return Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); }
+function isAvail(id){ return avail[String(id)] !== false && avail[id] !== false; }
+function save(){ localStorage.setItem("erica_cart",JSON.stringify(cart)); localStorage.setItem("erica_avail",JSON.stringify(avail)); }
+function count(){ var n=0; Object.keys(cart).forEach(function(k){ n += Number(cart[k]||0); }); return n; }
+function sub(){ var s=0; PRODUCTS.forEach(function(p){ s += Number(cart[p.id]||0)*p.price; }); return s; }
+function fee(){ if(document.getElementById("receive").value==="pickup") return 0; return count()===1 ? 2 : 0; }
+function goMenu(){ document.getElementById("menu").scrollIntoView({behavior:"smooth"}); }
+
+function renderProducts(){
+ var g=document.getElementById("grid"); g.innerHTML="";
+ PRODUCTS.forEach(function(p){
+   if(filter!=="Todos" && p.cat!==filter) return;
+   var ok=isAvail(p.id), c=document.createElement("article"); c.className="card"+(ok?"":" off");
+   c.innerHTML=(ok?"":"<span class='sold'>ESGOTADO</span>")+"<img src='"+p.img+"' alt='"+p.name+"'><div class='body'><span class='cat'>"+p.cat+"</span><h3>"+p.name+"</h3><div class='line'><span class='price'>"+money(p.price)+"</span><button class='plus' "+(ok?"":"disabled")+" onclick='add("+p.id+")'>+</button></div></div>";
+   g.appendChild(c);
+ });
+}
+function add(id){ cart[id]=Number(cart[id]||0)+1; save(); updateBar(); }
+function changeQty(id,d){ cart[id]=Number(cart[id]||0)+d; if(cart[id]<=0) delete cart[id]; save(); renderCart(); updateBar(); }
+function updateBar(){
+ var n=count(), bar=document.getElementById("cartbar");
+ document.getElementById("countTop").textContent=n;
+ document.getElementById("barCount").textContent=n+(n===1?" item":" itens");
+ document.getElementById("barMsg").textContent=n===1?"Adicione +1 e ganhe entrega grátis":"Ver carrinho";
+ document.getElementById("barTotal").textContent=money(sub()+(n===1?2:0))+" →";
+ bar.className="cartbar"+(n>0?" show":"");
+}
+function openCart(){ document.getElementById("overlay").className="overlay show"; renderCart(); }
+function closeCart(){ document.getElementById("overlay").className="overlay"; }
+function renderCart(){
+ var b=document.getElementById("items"); b.innerHTML="";
+ PRODUCTS.forEach(function(p){
+   if(!cart[p.id]) return;
+   var d=document.createElement("div"); d.className="item";
+   d.innerHTML="<img src='"+p.img+"' alt=''><div><b>"+p.name+"</b><br><small>"+money(p.price)+" cada</small></div><div class='qty'><button onclick='changeQty("+p.id+",-1)'>−</button><b>"+cart[p.id]+"</b><button onclick='changeQty("+p.id+",1)'>+</button></div>";
+   b.appendChild(d);
+ });
+ if(count()===0) b.innerHTML="<p style='color:#765f56'>Seu carrinho está vazio.</p>";
+ var pickup=document.getElementById("receive").value==="pickup", f=fee();
+ document.getElementById("addrbox").className=pickup?"hidden":"";
+ document.getElementById("sub").textContent=money(sub());
+ document.getElementById("fee").textContent=pickup?"Retirada grátis":(count()>=2?"GRÁTIS 🎉":money(f));
+ document.getElementById("total").textContent=money(sub()+f);
+ var note=document.getElementById("notice");
+ if(pickup || count()===0){note.className="notice hidden";}
+ else {note.className="notice";note.textContent=count()===1?"🍦 Adicione mais 1 unidade e ganhe entrega grátis!":"🎉 Você ganhou entrega grátis!";}
+}
+function payChange(){ document.getElementById("changebox").className=document.getElementById("pay").value==="Dinheiro"?"":"hidden"; }
+function getLocation(){
+ var btn=document.getElementById("locBtn"), status=document.getElementById("locStatus");
+ if(!navigator.geolocation){ alert("Seu navegador não oferece suporte à localização."); return; }
+ btn.disabled=true; btn.textContent="📍 Obtendo localização...";
+ navigator.geolocation.getCurrentPosition(
+  function(pos){
+   var lat=pos.coords.latitude.toFixed(6), lon=pos.coords.longitude.toFixed(6);
+   customerLocation="https://www.google.com/maps?q="+lat+","+lon;
+   status.textContent="✓ Localização adicionada ao pedido";
+   status.className="location-status";
+   btn.textContent="📍 Atualizar minha localização";
+   btn.disabled=false;
+  },
+  function(err){
+   btn.disabled=false; btn.textContent="📍 Tentar localização novamente";
+   var msg="Não foi possível obter sua localização.";
+   if(err.code===1) msg="Permissão de localização negada. Você ainda pode digitar o endereço.";
+   status.textContent=msg; status.className="location-status";
+  },
+  {enableHighAccuracy:true,timeout:12000,maximumAge:60000}
+ );
+}
+function finish(){
+ if(count()===0){alert("Adicione pelo menos um produto.");return;}
+ var name=document.getElementById("name").value.trim(); if(!name){alert("Digite seu nome.");return;}
+ var receive=document.getElementById("receive").value, addr=document.getElementById("addr").value.trim();
+ if(receive==="delivery"&&!addr&&!customerLocation){alert("Digite o endereço ou use sua localização atual.");return;}
+ var f=fee(), lines=["🍦 *NOVO PEDIDO — GOURMET DA ÉRICA*","","*Itens:*"];
+ PRODUCTS.forEach(function(p){ if(cart[p.id]) lines.push(cart[p.id]+"x "+p.name+" — "+money(cart[p.id]*p.price)); });
+ lines.push("","Subtotal: "+money(sub()),"Entrega: "+(receive==="pickup"?"RETIRADA GRÁTIS":(f===0?"GRÁTIS":money(f))),"*TOTAL: "+money(sub()+f)+"*","", "Cliente: "+name);
+ var phone=document.getElementById("phone").value.trim(); if(phone) lines.push("Telefone: "+phone);
+ lines.push("Recebimento: "+(receive==="delivery"?"Entrega":"Retirada"));
+ if(receive==="delivery"){
+ if(addr) lines.push("Endereço: "+addr);
+ if(customerLocation) lines.push("📍 Localização no mapa: "+customerLocation);
+ var r=document.getElementById("ref").value.trim();if(r)lines.push("Referência: "+r);
+}
+ var pay=document.getElementById("pay").value;lines.push("Pagamento: "+pay);
+ if(pay==="Dinheiro"){var ch=document.getElementById("change").value.trim();if(ch)lines.push("Troco para: "+ch);}
+ var ob=document.getElementById("obs").value.trim();if(ob)lines.push("Observação: "+ob);
+ window.open("https://wa.me/5562981228292?text="+encodeURIComponent(lines.join("\n")),"_blank");
+}
+function renderAdmin(){
+ var a=document.getElementById("admin");a.innerHTML="";
+ PRODUCTS.forEach(function(p){var ok=isAvail(p.id),r=document.createElement("div");r.className="adminrow";r.innerHTML="<span><b>"+p.name+"</b><br><small>"+p.cat+" • "+money(p.price)+"</small></span><button class='toggle "+(ok?"on":"offbtn")+"' onclick='toggle("+p.id+")'>"+(ok?"● Disponível":"● Indisponível")+"</button>";a.appendChild(r);});
+}
+function toggle(id){ avail[id]=!isAvail(id); save(); renderProducts(); renderAdmin(); }
+document.querySelectorAll(".filter").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".filter").forEach(function(b){b.classList.remove("active")});btn.classList.add("active");filter=btn.getAttribute("data-f");renderProducts();});});
+document.getElementById("overlay").addEventListener("click",function(e){if(e.target.id==="overlay")closeCart();});
+renderProducts();renderAdmin();updateBar();payChange();
+</script>
+</body></html>
