@@ -95,7 +95,7 @@ function render(){
  const box=document.getElementById("list"); box.innerHTML="";
  products.forEach(p=>{
   const el=document.createElement("div"); el.className="card";
-  el.innerHTML=`<img class="thumb" src="${p.img}" alt="">
+  el.innerHTML=`<img class="thumb" src="${imageSrc(p.img)}" alt="">
   <div><div class="name">${escapeHtml(p.name)}</div><div class="meta">${escapeHtml(p.cat)} • ${money(p.price)}</div></div>
   <div class="rowactions">
    <button class="toggle ${p.available?'on':'off'}" onclick="toggleProduct(${p.id})">${p.available?'● Disponível':'● Indisponível'}</button>
@@ -106,6 +106,15 @@ function render(){
 }
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+
+function imageSrc(src){
+ if(!src) return "";
+ if(src.startsWith("data:image/")) return src;
+ if(src.startsWith("/")) return src;
+ if(src.startsWith("assets/")) return "/" + src;
+ return src;
+}
+
 
 async function api(body){
  const r=await fetch("/admin-api/products",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
@@ -146,7 +155,7 @@ function openEdit(id){
  document.getElementById("existingImage").value=p.img;
  document.getElementById("photo").value="";
  pendingImage="";
- const pr=document.getElementById("preview");pr.src=p.img;pr.style.display="block";
+ const pr=document.getElementById("preview");pr.src=imageSrc(p.img);pr.style.display="block";
  document.getElementById("deleteBtn").classList.remove("hidden");
  document.getElementById("modal").classList.add("show");
 }
