@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login | Gourmet da Érika</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fff8f3;font-family:Arial,sans-serif;color:#2d1710}
+.box{width:min(390px,92%);background:#fff;border:1px solid #eadbd1;border-radius:22px;padding:28px;box-shadow:0 16px 45px #3b1b1015}
+h1{margin:0 0 6px}.muted{color:#806c63;margin-bottom:22px}label{font-weight:800}input{width:100%;margin-top:8px;padding:14px;border:1px solid #d9c6bb;border-radius:12px;font-size:16px}
+button{width:100%;margin-top:15px;padding:14px;border:0;border-radius:12px;background:#4b2115;color:#fff;font-weight:900;font-size:16px;cursor:pointer}
+.err{display:none;margin-top:14px;background:#fae6e6;color:#8a2525;padding:11px;border-radius:10px}.brand{text-align:center;font-weight:900;color:#a5234e;margin-bottom:18px}
+</style>
+</head>
+<body>
+<form class="box" id="form">
+<div class="brand">🍦 Gourmet da Érika</div>
+<h1>Área administrativa</h1>
+<div class="muted">Digite a senha para acessar o painel.</div>
+<label for="password">Senha</label>
+<input id="password" type="password" autocomplete="current-password" required autofocus>
+<button id="btn">Entrar</button>
+<div class="err" id="err">Senha incorreta.</div>
+</form>
+<script>
+document.getElementById("form").addEventListener("submit",async(e)=>{
+ e.preventDefault();
+ const btn=document.getElementById("btn"), err=document.getElementById("err");
+ btn.disabled=true; btn.textContent="Entrando..."; err.style.display="none";
+ try{
+  const r=await fetch("/api/admin-login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:document.getElementById("password").value})});
+  const d=await r.json();
+  if(!r.ok||!d.ok) throw new Error(d.error||"Senha incorreta.");
+  location.href="/admin/";
+ }catch(ex){err.textContent=ex.message||"Não foi possível entrar.";err.style.display="block";}
+ finally{btn.disabled=false;btn.textContent="Entrar";}
+});
+</script>
+</body></html>
