@@ -66,11 +66,11 @@ var filter = "Todos";
 var customerLocation = null;
 
 try { cart = JSON.parse(localStorage.getItem("erica_cart") || "{}") || {}; } catch(e) { cart = {}; }
-try { avail = JSON.parse(localStorage.getItem("erica_avail") || "{}") || {}; } catch(e) { avail = {}; }
+
 
 function money(v){ return Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); }
-function isAvail(id){ return avail[String(id)] !== false && avail[id] !== false; }
-function save(){ localStorage.setItem("erica_cart",JSON.stringify(cart)); localStorage.setItem("erica_avail",JSON.stringify(avail)); }
+function isAvail(id){ var p=PRODUCTS.find(function(x){return x.id===id}); return !(p && p.available===false); }
+function save(){ localStorage.setItem("erica_cart",JSON.stringify(cart)); }
 function count(){ var n=0; Object.keys(cart).forEach(function(k){ n += Number(cart[k]||0); }); return n; }
 function sub(){ var s=0; PRODUCTS.forEach(function(p){ s += Number(cart[p.id]||0)*p.price; }); return s; }
 function fee(){ if(document.getElementById("receive").value==="pickup") return 0; return count()===1 ? 2 : 0; }
@@ -158,8 +158,23 @@ function finish(){
  var ob=document.getElementById("obs").value.trim();if(ob)lines.push("Observação: "+ob);
  window.open("https://wa.me/5562981228292?text="+encodeURIComponent(lines.join("\n")),"_blank");
 }
+
+async function syncProducts(){
+ try{
+   var r=await fetch("/api/products",{cache:"no-store"});
+   var data=await r.json();
+   if(r.ok && data.ok && Array.isArray(data.products)){
+     PRODUCTS=data.products;
+     renderProducts();
+     updateBar();
+   }
+ }catch(e){
+   console.warn("Backend indisponível; catálogo local mantido.");
+ }
+}
+
 document.querySelectorAll(".filter").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".filter").forEach(function(b){b.classList.remove("active")});btn.classList.add("active");filter=btn.getAttribute("data-f");renderProducts();});});
 document.getElementById("overlay").addEventListener("click",function(e){if(e.target.id==="overlay")closeCart();});
-renderProducts();updateBar();payChange();
+renderProducts();updateBar();payChange();syncProducts();
 </script>
 </body></html>

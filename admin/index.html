@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4b2115">
+<title>Admin | Gourmet da Érika</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff8f3;color:#2d1710}
+.wrap{width:min(760px,92%);margin:0 auto;padding:30px 0 70px}
+header{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:24px}
+h1{margin:0;font-size:30px}.muted{color:#806c63}.card{background:white;border:1px solid #eadbd1;border-radius:18px;padding:15px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;gap:14px;box-shadow:0 6px 18px #3b1b100b}
+.name{font-weight:900}.meta{font-size:13px;color:#806c63;margin-top:4px}.toggle{border:0;border-radius:999px;padding:10px 13px;font-weight:900;min-width:125px}.on{background:#e2f5e9;color:#17633d}.off{background:#f6e4e4;color:#8b2727}
+.top{background:#4b2115;color:#fff;padding:12px 16px;text-align:center;font-weight:800}.status{padding:12px;border-radius:12px;margin:14px 0;font-weight:700}.ok{background:#e8f6ed;color:#165f3b}.err{background:#fae6e6;color:#8a2525}.hidden{display:none}
+a{color:#a5234e;font-weight:800;text-decoration:none}
+@media(max-width:560px){.card{align-items:flex-start;flex-direction:column}.toggle{width:100%}}
+</style>
+</head>
+<body>
+<div class="top">🔐 Área administrativa — Gourmet da Érika</div>
+<main class="wrap">
+<header>
+  <div>
+    <h1>Produtos</h1>
+    <div class="muted">Toque para marcar disponível ou indisponível.</div>
+  </div>
+  <a href="/">Ver loja</a>
+</header>
+<div id="status" class="status hidden"></div>
+<div id="list"><p class="muted">Carregando produtos...</p></div>
+</main>
+<script>
+const money=(v)=>Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+let products=[];
+
+function statusMsg(msg, ok=true){
+ const box=document.getElementById("status");
+ box.textContent=msg;
+ box.className="status "+(ok?"ok":"err");
+ setTimeout(()=>box.className="status hidden",2200);
+}
+
+async function load(){
+ try{
+   const r=await fetch("/api/products",{cache:"no-store"});
+   const data=await r.json();
+   if(!r.ok || !data.ok) throw new Error();
+   products=data.products;
+   render();
+ }catch(e){
+   document.getElementById("list").innerHTML="<p class='status err'>Não foi possível carregar os produtos.</p>";
+ }
+}
+
+function render(){
+ const box=document.getElementById("list");
+ box.innerHTML="";
+ products.forEach((p)=>{
+   const el=document.createElement("div");
+   el.className="card";
+   el.innerHTML=`<div><div class="name">${p.name}</div><div class="meta">${p.cat} • ${money(p.price)}</div></div>
+   <button class="toggle ${p.available?'on':'off'}" onclick="toggleProduct(${p.id})">${p.available?'● Disponível':'● Indisponível'}</button>`;
+   box.appendChild(el);
+ });
+}
+
+async function toggleProduct(id){
+ const p=products.find((x)=>x.id===id);
+ if(!p) return;
+ const next=!p.available;
+ try{
+   const r=await fetch("/admin-api/products",{
+     method:"POST",
+     headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({id,available:next})
+   });
+   const data=await r.json();
+   if(!r.ok || !data.ok) throw new Error(data.error||"Erro");
+   p.available=next;
+   render();
+   statusMsg(p.name+" atualizado.");
+ }catch(e){
+   statusMsg("Não foi possível atualizar. Tente novamente.",false);
+ }
+}
+load();
+</script>
+</body>
+</html>
