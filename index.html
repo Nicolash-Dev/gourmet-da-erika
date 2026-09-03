@@ -29,9 +29,13 @@ header{position:sticky;top:0;z-index:20;background:#fffaf6f2;border-bottom:1px s
 .summary{background:#fff;border:1px solid #eadbd1;border-radius:15px;padding:14px;margin:14px 0}.sum{display:flex;justify-content:space-between;margin:7px 0}.total{font-size:20px;font-weight:900;border-top:1px solid #eadbd1;padding-top:10px}.notice{background:#e8f7ee;color:#155f3b;border-radius:10px;padding:10px;font-size:14px;font-weight:800}
 .form{display:grid;gap:9px}.form input,.form select,.form textarea{width:100%;padding:12px;border:1px solid #dccac0;border-radius:11px;background:#fff}.location-btn{width:100%;border:1px solid #d83f72;background:#fff;color:#a5234e;border-radius:11px;padding:12px;font-weight:800}
 .location-status{font-size:13px;color:#155f3b;font-weight:800;padding:0 2px}
+.pixbox{background:linear-gradient(135deg,#fff 0%,#fff4f7 100%);border:1px solid #efbfd0;border-radius:15px;padding:14px}
+.pixhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:5px}.pixhead b{color:#4b2115}.pixbadge{background:#e8f7ee;color:#155f3b;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900}
+.pixhint{display:block;color:#765f56;font-size:13px;line-height:1.4;margin-bottom:11px}.pixrow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px dashed #d83f72;border-radius:11px;padding:10px}
+.pixlabel{display:block;color:#a5234e;font-size:10px;font-weight:900;letter-spacing:.6px;margin-bottom:3px}.pixkey{font-family:Consolas,Monaco,monospace;font-size:16px;color:#2d1710;overflow-wrap:anywhere}
+.pixcopy{flex:0 0 auto;border:0;border-radius:9px;background:#d83f72;color:#fff;padding:10px 12px;font-weight:900}.pixcopy:focus-visible{outline:3px solid #f3a9c1;outline-offset:2px}.pixstatus{min-height:18px;color:#155f3b;font-size:12px;font-weight:800;padding-top:6px}
 .hidden{display:none!important}
-
-footer{text-align:center;color:#765f56;padding:46px 18px 100px}
+footer{text-align:center;color:#765f56;padding:46px 18px 100px}.creator{margin-top:18px;padding-top:16px;border-top:1px solid #eadbd1;font-size:12px;color:#9a8075}.creator b{color:#4b2115;letter-spacing:.3px}
 @media(max-width:850px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.info{grid-template-columns:1fr}}
 @media(max-width:520px){.head{align-items:flex-start;flex-direction:column}.grid{gap:9px}.wrap{padding-left:12px;padding-right:12px}.card .body{padding:10px}.body h3{font-size:14px}.hero{padding-left:16px;padding-right:16px}.nav .brown{display:none}}
 </style>
@@ -48,7 +52,6 @@ footer{text-align:center;color:#765f56;padding:46px 18px 100px}
 <div class="grid" id="grid"></div>
 </section>
 <section class="wrap info"><div class="inf"><b>🛵 Entrega</b><span>R$2 para 1 unidade; grátis com 2 ou mais.</span></div><div class="inf"><b>💵 Pagamento</b><span>Pix ou dinheiro.</span></div><div class="inf"><b>📲 Pedido</b><span>Finalização pelo WhatsApp.</span></div></section>
-
 <button id="cartbar" class="cartbar" onclick="openCart()"><span><b id="barCount">0 itens</b><br><small id="barMsg">Ver carrinho</small></span><b id="barTotal">R$ 0,00 →</b></button>
 <div id="overlay" class="overlay"><div class="drawer"><div class="dhead"><div><small>SEU PEDIDO</small><h2 style="margin:3px 0">Carrinho</h2></div><button class="x" onclick="closeCart()">×</button></div><div id="items"></div><div class="summary"><div class="sum"><span>Subtotal</span><b id="sub">R$ 0,00</b></div><div class="sum"><span>Entrega</span><b id="fee">—</b></div><div id="notice" class="notice hidden"></div><div class="sum total"><span>Total</span><span id="total">R$ 0,00</span></div></div>
 <div class="form"><select id="receive" onchange="renderCart()"><option value="delivery">Entrega</option><option value="pickup">Retirada</option></select><div id="addrbox">
@@ -56,17 +59,16 @@ footer{text-align:center;color:#765f56;padding:46px 18px 100px}
 <input id="ref" placeholder="Ponto de referência (opcional)">
 <button type="button" class="location-btn" id="locBtn" onclick="getLocation()">📍 Usar minha localização atual</button>
 <div id="locStatus" class="location-status hidden"></div>
-</div><input id="name" placeholder="Seu nome"><input id="phone" placeholder="Seu telefone (opcional)"><select id="pay" onchange="payChange()"><option>Pix</option><option>Dinheiro</option></select><div id="changebox" class="hidden"><input id="change" placeholder="Troco para quanto? Ex.: R$ 50"></div><textarea id="obs" rows="2" placeholder="Observação (opcional)"></textarea><button class="btn pink" style="padding:15px" onclick="finish()">Finalizar no WhatsApp</button></div></div></div>
-<footer><b>Gourmet da Érika</b><br>Santa Terezinha de Goiás<br><small>(62) 98122-8292 • Atendimento todos os dias</small></footer>
+</div><input id="name" placeholder="Seu nome"><input id="phone" placeholder="Seu telefone (opcional)"><select id="pay" onchange="payChange()"><option>Pix</option><option>Dinheiro</option></select><div id="pixbox" class="pixbox"><div class="pixhead"><b>Pagamento via Pix</b><span class="pixbadge">RÁPIDO</span></div><small class="pixhint">Copie a chave, pague pelo aplicativo do seu banco e envie o comprovante no WhatsApp.</small><div class="pixrow"><div><span class="pixlabel">CHAVE PIX — TELEFONE</span><strong class="pixkey" id="pixKey">62981228292</strong></div><button type="button" class="pixcopy" id="pixCopyBtn" onclick="copyPix()">Copiar chave</button></div><div id="pixStatus" class="pixstatus" aria-live="polite"></div></div><div id="changebox" class="hidden"><input id="change" placeholder="Troco para quanto? Ex.: R$ 50"></div><textarea id="obs" rows="2" placeholder="Observação (opcional)"></textarea><button class="btn pink" style="padding:15px" onclick="finish()">Finalizar no WhatsApp</button></div></div></div>
+<footer><b>Gourmet da Érika</b><br>Santa Terezinha de Goiás<br><small>(62) 98122-8292 • Atendimento todos os dias</small><div class="creator">Desenvolvido por <b>Nicolas.Dev</b></div></footer>
 <script>
+var PIX_KEY = "62981228292";
 var PRODUCTS = [{"id": 1, "name": "Açaí Trufado", "cat": "Picolé", "price": 10, "img": "assets/acai-trufado.jpg"}, {"id": 2, "name": "Mousse de Maracujá", "cat": "Geladinho", "price": 7, "img": "assets/mousse-maracuja.jpg"}, {"id": 3, "name": "Trufado de Maracujá", "cat": "Geladinho", "price": 7, "img": "assets/trufado-maracuja.jpg"}, {"id": 4, "name": "Ninho com Nutella", "cat": "Geladinho", "price": 7, "img": "assets/ninho-nutella.jpg"}, {"id": 5, "name": "Prestígio", "cat": "Geladinho", "price": 7, "img": "assets/prestigio-geladinho.jpg"}, {"id": 6, "name": "Ferrero Rocher", "cat": "Geladinho", "price": 7, "img": "assets/ferrero-rocher.jpg"}, {"id": 7, "name": "Oreo • Ninho & Nutella", "cat": "Picolé", "price": 10, "img": "assets/oreo-ninho-nutella.jpg"}, {"id": 8, "name": "Pudim", "cat": "Geladinho", "price": 7, "img": "assets/pudim.jpg"}, {"id": 9, "name": "Nutilinho", "cat": "Picolé", "price": 10, "img": "assets/nutilinho.jpg"}, {"id": 10, "name": "Prestígio Gourmet", "cat": "Picolé", "price": 10, "img": "assets/prestigio-picole.jpg"}, {"id": 11, "name": "Laka com Oreo", "cat": "Geladinho", "price": 7, "img": "assets/laka-oreo.jpg"}, {"id": 12, "name": "Ninho com Morango", "cat": "Geladinho", "price": 7, "img": "assets/ninho-morango.jpg"}, {"id": 13, "name": "Tablito", "cat": "Geladinho", "price": 7, "img": "assets/tablito.jpg"}, {"id": 14, "name": "Napolitano", "cat": "Picolé", "price": 10, "img": "assets/napolitano.jpg"}, {"id": 15, "name": "Sensação", "cat": "Picolé", "price": 10, "img": "assets/sensacao.jpg"}];
 var cart = {};
-var avail = {};
 var filter = "Todos";
 var customerLocation = null;
 
 try { cart = JSON.parse(localStorage.getItem("erica_cart") || "{}") || {}; } catch(e) { cart = {}; }
-
 
 function money(v){ return Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"}); }
 function isAvail(id){ var p=PRODUCTS.find(function(x){return x.id===id}); return !(p && p.available===false); }
@@ -115,7 +117,24 @@ function renderCart(){
  if(pickup || count()===0){note.className="notice hidden";}
  else {note.className="notice";note.textContent=count()===1?"🍦 Adicione mais 1 unidade e ganhe entrega grátis!":"🎉 Você ganhou entrega grátis!";}
 }
-function payChange(){ document.getElementById("changebox").className=document.getElementById("pay").value==="Dinheiro"?"":"hidden"; }
+function payChange(){
+ var isCash=document.getElementById("pay").value==="Dinheiro";
+ document.getElementById("changebox").className=isCash?"":"hidden";
+ document.getElementById("pixbox").className=isCash?"pixbox hidden":"pixbox";
+}
+function copyPix(){
+ var status=document.getElementById("pixStatus"), btn=document.getElementById("pixCopyBtn");
+ function copied(){
+  status.textContent="✓ Chave Pix copiada!"; btn.textContent="Copiado!";
+  window.setTimeout(function(){status.textContent="";btn.textContent="Copiar chave";},2200);
+ }
+ function fallback(){
+  var field=document.createElement("textarea");field.value=PIX_KEY;field.setAttribute("readonly","");field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();
+  try{document.execCommand("copy");copied();}catch(e){window.prompt("Copie a chave Pix:",PIX_KEY);}
+  document.body.removeChild(field);
+ }
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(PIX_KEY).then(copied).catch(fallback);}else{fallback();}
+}
 function getLocation(){
  var btn=document.getElementById("locBtn"), status=document.getElementById("locStatus");
  if(!navigator.geolocation){ alert("Seu navegador não oferece suporte à localização."); return; }
@@ -158,7 +177,6 @@ function finish(){
  var ob=document.getElementById("obs").value.trim();if(ob)lines.push("Observação: "+ob);
  window.open("https://wa.me/5562981228292?text="+encodeURIComponent(lines.join("\n")),"_blank");
 }
-
 async function syncProducts(){
  try{
    var r=await fetch("/api/products",{cache:"no-store"});
@@ -172,13 +190,8 @@ async function syncProducts(){
    console.warn("Backend indisponível; catálogo local mantido.");
  }
 }
-
 document.querySelectorAll(".filter").forEach(function(btn){btn.addEventListener("click",function(){document.querySelectorAll(".filter").forEach(function(b){b.classList.remove("active")});btn.classList.add("active");filter=btn.getAttribute("data-f");renderProducts();});});
 document.getElementById("overlay").addEventListener("click",function(e){if(e.target.id==="overlay")closeCart();});
 renderProducts();updateBar();payChange();syncProducts();
 </script>
 </body></html>
-
-<!-- V2.2 admin completo -->
-
-<!-- V2.3 corrige caminhos das fotos no admin -->
